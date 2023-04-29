@@ -13,19 +13,18 @@ services:
     build: ./requirements/mariadb
     volumes:
       - mariadb-volume:/var/lib/mysql
-    # command: bash -c "service mariadb start"
     # ports:
     #   - "3306:3306"
-  # web:
-  #   build: ./requirements/wordpress
-  #   environment:
-  #     - "DB_NAME=mydatabase"
-  #     - "DB_USER=myuser"
-  #     - "DB_PASS=mypassword"
-  #     - "DB_HOST=mariadb"
-  #   volumes:
-  #     - wordpress-volume:/var/www/html
-  #   depends_on:
-  #     - db
+  web:
+    build: ./requirements/wordpress
+    environment:
+      - "DB_NAME=mydatabase"
+      - "DB_USER=myuser"
+      - "DB_PASS=mypassword"
+      - "DB_HOST=mariadb"
+    volumes:
+      - wordpress-volume:/var/www/html
+    depends_on:
+      - db
 
 
