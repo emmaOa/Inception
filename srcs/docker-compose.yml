@@ -2,7 +2,7 @@ version: '3'
 
 volumes:
   mariadb-volume:
-  # wordpress-volume:
+  wordpress-volume:
 
 services: 
   db: 
@@ -26,5 +26,3 @@ services:
       - wordpress-volume:/var/www/html
     depends_on:
       - db
-
-

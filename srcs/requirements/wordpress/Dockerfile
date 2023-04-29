@@ -1,11 +1,14 @@
 FROM debian:bullseye
 
-RUN mkdir -p /var/www/html
+# RUN apt-get update && \
+#     apt-get install -y php-zip && \
+#     docker-php-ext-install zip
+
+WORKDIR  /var/www/html
+# RUN WORKDIR /var/www/html
 
 RUN apt-get update && \
-    apt-get install -y php php-fpm curl && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get install -y php-fpm curl
 
 # WORKDIR /tmp
 
@@ -16,16 +19,27 @@ RUN apt-get update && \
 
 
 RUN curl -L http://wordpress.org/latest.tar.gz | tar xz
-RUN mv wordpress/* /var/www/html
-RUN rm -f latest.tar.gz
-WORKDIR /var/www/html
-RUN cp wp-config-sample.php wp-config.php
-WORKDIR /../../..
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /bin/wp
+    RUN mv wordpress/* /var/www/html
+RUN rm -rf latest.tar.gz wordpress
+# WORKDIR  /var/www/html
+RUN chown -R www-data:www-data /var/www/html
 
-RUN wp config creat --allow-root --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASS --dbhost=$DB_HOST
+
+# WORKDIR /../../..
+# RUN touch testfile
+# COPY wp-config-sample.php /wordpress
+RUN cp wp-config-sample.php wp-config.php
+# RUN  mv wordpress/wp-config-sample.php wordpress/wp-config.php
+CMD [ "bash" ]
+    # WORKDIR /../../..
+    # RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+    # RUN chmod +x wp-cli.phar
+    # RUN mv wp-cli.phar /bin/wp
+    # 
+    # RUN wp core download --allow-root --skip-content
+# RUN wp config creat --allow-root --dbname=$DB_NAME --dbuser=$DB_USER --dbpass=$DB_PASS --dbhost=$DB_HOST
+    # RUN wp config create --allow-root --dbname=${DB_NAME} --dbuser=${DB_USER} --dbpass=${DB_PASS} --dbhost=${DB_HOST}
+
 # RUN wp config creat --dbname=mydatabase --dbuser=myuser --dbpass=mypassword --dbhost=mariadb
 # RUN 
 # RUN tar xfz latest.tar.gz
