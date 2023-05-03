@@ -1,28 +1,39 @@
 version: '3'
 
-volumes:
-  mariadb-volume:
-  wordpress-volume:
+networks:
+  mynetwork:
+    driver: bridge
+
 
 services: 
-  db: 
+  db:
     environment:
-      - "DB_NAME=mydatabase"
-      - "DB_USER=myuser"
-      - "DB_PASS=mypassword"
+      DB_NAME: mydatabase
+      DB_USER: myuser
+      DB_PASS: mypassword
+      # MYSQL_ROOT_PASSWORD: mypassword
     build: ./requirements/mariadb
     volumes:
       - mariadb-volume:/var/lib/mysql
-    # ports:
-    #   - "3306:3306"
+    ports:
+      - "3306:3306"
+    networks:
+      - mynetwork
+
   web:
     build: ./requirements/wordpress
     environment:
-      - "DB_NAME=mydatabase"
-      - "DB_USER=myuser"
-      - "DB_PASS=mypassword"
-      - "DB_HOST=mariadb"
+      DB_NAME: mydatabase
+      DB_USER: myuser
+      DB_PASS: mypassword
+      DB_HOST: db
     volumes:
       - wordpress-volume:/var/www/html
     depends_on:
       - db
+    networks:
+      - mynetwork
+
+volumes:
+  mariadb-volume:
+  wordpress-volume:
