@@ -7,12 +7,12 @@ networks:
 
 services: 
   db:
+    build: ./requirements/mariadb
     environment:
       DB_NAME: mydatabase
       DB_USER: myuser
+      MYSQL_ROOT_PASSWORD: mysecretpassword
       DB_PASS: mypassword
-      # MYSQL_ROOT_PASSWORD: mypassword
-    build: ./requirements/mariadb
     volumes:
       - mariadb-volume:/var/lib/mysql
     ports:
@@ -28,12 +28,33 @@ services:
       DB_PASS: mypassword
       DB_HOST: db
     volumes:
-      - wordpress-volume:/var/www/html
+      - wrd-nginx-volume:/var/www/html
+    ports:
+      - "9000:9000"
     depends_on:
-      - db
+         - db
+    networks:
+      - mynetwork
+  
+  nginx:
+    build:
+      context: ./requirements/nginx
+    volumes:
+      - wrd-nginx-volume:/etc/nginx/conf.d
+    ports:
+      - "80:80"
+    depends_on:
+      - web
     networks:
       - mynetwork
 
 volumes:
   mariadb-volume:
-  wordpress-volume:
+  wrd-nginx-volume:
+
+
+
+
+
+
+
