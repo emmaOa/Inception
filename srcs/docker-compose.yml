@@ -20,7 +20,7 @@ services:
     networks:
       - mynetwork
 
-  web:
+  wordpress:
     build: ./requirements/wordpress
     environment:
       DB_NAME: mydatabase
@@ -31,30 +31,25 @@ services:
       - wrd-nginx-volume:/var/www/html
     ports:
       - "9000:9000"
+    restart: always
     depends_on:
          - db
     networks:
       - mynetwork
-  
+
   nginx:
     build:
       context: ./requirements/nginx
     volumes:
-      - wrd-nginx-volume:/etc/nginx/conf.d
+      - wrd-nginx-volume:/var/www/html
     ports:
       - "80:80"
+    restart: always
     depends_on:
-      - web
+      - wordpress
     networks:
       - mynetwork
 
 volumes:
   mariadb-volume:
   wrd-nginx-volume:
-
-
-
-
-
-
-
