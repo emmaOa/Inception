@@ -1,24 +1,17 @@
 version: '3'
 
-networks:
-  mynetwork:
-    driver: bridge
-
-
 services: 
   db:
     build: ./requirements/mariadb
     environment:
       DB_NAME: mydatabase
       DB_USER: myuser
-      MYSQL_ROOT_PASSWORD: mysecretpassword
       DB_PASS: mypassword
     volumes:
       - mariadb-volume:/var/lib/mysql
-    ports:
-      - "3306:3306"
     networks:
       - mynetwork
+    init : true
 
   wordpress:
     build: ./requirements/wordpress
@@ -30,12 +23,13 @@ services:
     volumes:
       - wrd-nginx-volume:/var/www/html
     ports:
-      - "9000:9000"
+      - 9000:9000
     restart: always
     depends_on:
          - db
     networks:
       - mynetwork
+    init : true
 
   nginx:
     build:
@@ -43,12 +37,17 @@ services:
     volumes:
       - wrd-nginx-volume:/var/www/html
     ports:
-      - "80:80"
+      - 443:443
     restart: always
     depends_on:
       - wordpress
     networks:
       - mynetwork
+    init : true
+
+networks:
+  mynetwork:
+    driver: bridge
 
 volumes:
   mariadb-volume:
