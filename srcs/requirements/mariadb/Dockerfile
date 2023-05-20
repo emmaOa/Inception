@@ -8,6 +8,4 @@ RUN chown -R mysql:mysql /run/mysqld/
 COPY tools/auto-mysql-ins.sh /auto-mysql-ins.sh
 RUN chmod +x /auto-mysql-ins.sh
 
-RUN /auto-mysql-ins.sh
-
-CMD ["mariadbd"]
+ENTRYPOINT [ "./auto-mysql-ins.sh" ]

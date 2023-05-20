@@ -13,25 +13,10 @@ RUN echo "listen = 0.0.0.0:9000" >> /etc/php/7.4/fpm/pool.d/www.conf
 WORKDIR  /var/www/html
 
 RUN curl -L http://wordpress.org/latest.tar.gz | tar xz
-    RUN mv wordpress/* /var/www/html
+RUN mv wordpress/* /var/www/html
 RUN rm -rf latest.tar.gz wordpress
 RUN chown -R www-data:www-data /var/www/html
-RUN cp wp-config-sample.php wp-config.php
-
-RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /bin/wp
-RUN apt-get install -y php-zip
-
-RUN wp config set  DB_NAME mydatabase --allow-root
-RUN wp config set  DB_USER myuser --allow-root
-RUN wp config set  DB_PASSWORD mypassword --allow-root
-RUN wp config set  DB_HOST db --allow-root
-WORKDIR /../../..
-
-# RUN chown -R www-data:www-data /var/www/html
-# RUN chmod -R 755 /var/www/html/wp-config.php
-
+COPY tools/wp-config.php .
+RUN chmod +x wp-config.php
 CMD ["php-fpm7.4", "-R", "-F"]
-
 

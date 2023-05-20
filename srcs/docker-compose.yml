@@ -3,10 +3,8 @@ version: '3'
 services: 
   db:
     build: ./requirements/mariadb
-    environment:
-      DB_NAME: mydatabase
-      DB_USER: myuser
-      DB_PASS: mypassword
+    env_file:
+      - .env
     volumes:
       - mariadb-volume:/var/lib/mysql
     networks:
@@ -15,18 +13,13 @@ services:
 
   wordpress:
     build: ./requirements/wordpress
-    environment:
-      DB_NAME: mydatabase
-      DB_USER: myuser
-      DB_PASS: mypassword
-      DB_HOST: db
     volumes:
       - wrd-nginx-volume:/var/www/html
     ports:
       - 9000:9000
     restart: always
     depends_on:
-         - db
+      - db
     networks:
       - mynetwork
     init : true
