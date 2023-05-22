@@ -2,9 +2,9 @@ FROM debian:bullseye
 
 RUN apt-get update && apt-get install -y mariadb-server
 
-RUN rm -rf /etc/mysql/my.cnf
-COPY conf/my.cnf /etc/mysql/
-# RUN chmod -R 755 /var/run/mysqld
+RUN rm -rf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY conf/50-server.cnf /etc/mysql/mariadb.conf.d/
+
 
 RUN mkdir -p /var/run/mysqld/ 
 RUN chown -R mysql:mysql /var/run/mysqld
@@ -17,3 +17,4 @@ RUN chmod +x /auto-mysql-ins.sh
 
 
 ENTRYPOINT [ "./auto-mysql-ins.sh" ]
+

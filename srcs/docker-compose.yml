@@ -9,7 +9,7 @@ services:
       - mariadb-volume:/var/lib/mysql
     networks:
       - mynetwork
-    init : true
+
 
   wordpress:
     build: ./requirements/wordpress
@@ -22,7 +22,7 @@ services:
       - db
     networks:
       - mynetwork
-    init : true
+
 
   nginx:
     build:
@@ -36,7 +36,7 @@ services:
       - wordpress
     networks:
       - mynetwork
-    init : true
+
 
 networks:
   mynetwork:
