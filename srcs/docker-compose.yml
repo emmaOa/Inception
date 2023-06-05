@@ -3,8 +3,10 @@ version: '3'
 services: 
   db:
     build: ./requirements/mariadb
+    image: db
     env_file:
       - .env
+    restart: always
     volumes:
       - mariadb-volume:/var/lib/mysql
     networks:
@@ -13,10 +15,11 @@ services:
 
   wordpress:
     build: ./requirements/wordpress
+    image: wordpress
+    env_file:
+      - .env
     volumes:
       - wrd-nginx-volume:/var/www/html
-    ports:
-      - 9000:9000
     restart: always
     depends_on:
       - db
@@ -27,13 +30,14 @@ services:
   nginx:
     build:
       context: ./requirements/nginx
+    image: nginx
     volumes:
       - wrd-nginx-volume:/var/www/html
     ports:
       - 443:443
     restart: always
     depends_on:
-      - wordpress
+     - wordpress
     networks:
       - mynetwork
 
@@ -44,4 +48,14 @@ networks:
 
 volumes:
   mariadb-volume:
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: /home/iouazzan/data
   wrd-nginx-volume:
+    # driver: local
+    # driver_opts:
+    #   type: none
+    #   o: bind
+    #   device: /home/iouazzan/data

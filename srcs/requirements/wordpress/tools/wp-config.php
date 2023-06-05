@@ -80,10 +80,16 @@ $table_prefix = 'wp_';
  * @link https://wordpress.org/documentation/article/debugging-in-wordpress/
  */
 define( 'WP_DEBUG', false );
+define( 'WP_HOME', 'https://emmaoa-fictional-guacamole-5p6gg4p4gxgfp7xg-443.preview.app.github.dev' );
+define( 'WP_SITEURL', 'https://emmaoa-fictional-guacamole-5p6gg4p4gxgfp7xg-443.preview.app.github.dev' );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
-
+// define('WP_DEFAULT_TITLE', 'Welcome');
+// define('WP_ADMIN_USER', 'your_username');
+// define('WP_ADMIN_PASSWORD', 'imane123@456');
+// define('WP_ADMIN_EMAIL', 'your_email@example.com');
+// define('WP_INSTALLING', true);
 
 /* That's all, stop editing! Happy publishing. */
 

@@ -21,4 +21,6 @@ RUN /config-nginx.sh
 
 RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
+EXPOSE 443
+
 CMD ["nginx", "-g", "daemon off;"]
