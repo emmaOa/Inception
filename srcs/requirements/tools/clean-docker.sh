@@ -9,6 +9,6 @@ docker network prune --force
 # To remove all unused data:
 docker system prune --all --force
 # To remove all unused data:
-docker volume prune --force
+docker volume rm $(docker volume ls -qf dangling=true) --force
 
 

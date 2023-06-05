@@ -1,6 +1,20 @@
 version: '3'
 
-services: 
+volumes:
+  mariadb-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/iouazzan/data/db
+  wrd-nginx-volume:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/iouazzan/data/wdp
+
+services:
   db:
     build: ./requirements/mariadb
     image: db
@@ -45,17 +59,3 @@ services:
 networks:
   mynetwork:
     driver: bridge
-
-volumes:
-  mariadb-volume:
-    # driver: local
-    # driver_opts:
-    #   type: none
-    #   o: bind
-    #   device: /home/iouazzan/data
-  wrd-nginx-volume:
-    # driver: local
-    # driver_opts:
-    #   type: none
-    #   o: bind
-    #   device: /home/iouazzan/data

@@ -2,10 +2,10 @@
 
 cd /var/www/html
 
-curl -L http://wordpress.org/latest.tar.gz | tar xz
-mv wordpress/* /var/www/html
-rm -rf latest.tar.gz wordpress
-chown -R www-data:www-data /var/www/html
+  curl -sSfL http://wordpress.org/latest.tar.gz | tar xz -C /var/www/html
+  rm -rf latest.tar.gz wordpress
+  chown -R www-data:www-data /var/www/html
+
 
 cd /wp.sh
 
@@ -22,7 +22,7 @@ wp-cli --allow-root config create --dbname="$DB_NAME" \
 
 
 wp-cli --allow-root core install \
-    --url="http://example.com" \
+    --url="$WP_URL" \
     --title="$WP_ADMINE_TITLE" \
     --admin_user="$WP_ADMINE_NAME" \
     --admin_password="$WP_ADMINE_PASSWORD" \
@@ -33,4 +33,4 @@ wp-cli --allow-root user create \
     "$WP_USER_NAME" "$WP_USER_EMAIL" \
     --role="$WP_USER_ROLE" \
     --user_pass="$WP_USER_PASSWORD"
-php-fpm7.4 -F
+exec "$@"
