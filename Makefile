@@ -1,12 +1,11 @@
-THIS_FILE := $(lastword $(MAKEFILE_LIST))
-.PHONY:  build up_d up start down destroy stop restart ps clear
-
 build:
 	docker-compose -f srcs/docker-compose.yml build
 up_d:
 	docker-compose -f srcs/docker-compose.yml up -d
 up:
 	docker-compose -f srcs/docker-compose.yml up
+up_build:
+	docker-compose -f srcs/docker-compose.yml up --build
 start:
 	docker-compose -f srcs/docker-compose.yml start
 down:

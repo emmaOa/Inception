@@ -12,7 +12,7 @@ RUN chmod -R 755 /var/www/html
 COPY tools/generate-ssl.sh /generate-ssl.sh
 RUN chmod +x generate-ssl.sh
 
-COPY tools/config-nginx.sh /config-nginx.sh
+COPY conf/config-nginx.sh /config-nginx.sh
 RUN chmod +x config-nginx.sh
 
 
