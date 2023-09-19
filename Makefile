@@ -5,7 +5,8 @@ up_d:
 up:
 	docker-compose -f srcs/docker-compose.yml up
 up_build:
-	docker-compose -f srcs/docker-compose.yml up --build
+	docker-compose -f srcs/docker-compose.yml up --build -d db
+	docker-compose -f srcs/docker-compose.yml up --build -d
 start:
 	docker-compose -f srcs/docker-compose.yml start
 down:
